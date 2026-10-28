@@ -73,12 +73,21 @@ function buildDoc(){
       if(s.note) b.push({k:"small", t:s.note});
     });
     b.push({k:"h5", t:"Практики на три уровня минуса"});
+    b.push({k:"pi", t:"После каждой практики стоит слово-код: короткая формула. Прочитайте её вслух или про себя и щёлкните пальцами, как будто нажимаете кнопку выполнить. Работайте только со своим опытом и своими чувствами. Развёрнутые слова-коды этой энергии собраны отдельным блоком после практик."});
     if(E.levelinfo.length) b.push({k:"lvl", items:E.levelinfo});
     if(E.warn) b.push({k:"small", t:E.warn});
     E.levels.forEach(function(L){
       b.push({k:"lvlh", t:L.t});
       L.pr.forEach(function(p){ b.push(practiceBlock(p)); });
     });
+    if(E.codes){
+      b.push({k:"h5", t:"Слова-коды этой энергии"});
+      b.push({k:"pi", t:E.codes.intro});
+      E.codes.groups.forEach(function(g){
+        b.push({k:"h4", t:g.h});
+        g.parts.forEach(function(p){ b.push(p.k === "ul" ? {k:"ul", items:p.items} : {k:"small", t:p.t}); });
+      });
+    }
     secs.push({eb:"Муладхара · " + u.roles.map(function(r){ return ROLE_SHORT[r].toLowerCase(); }).join(" и "), t:u.n + ". " + E.name, blocks:b, pb:true});
   });
   /* 3. Сахасрара */
@@ -121,7 +130,7 @@ function blockHtml(b){
     case "phr": return '<div class="phr"><p>' + esc(b.t) + "</p></div>";
     case "lvl": return '<div class="lvl">' + b.items.map(function(x){ return "<p>" + esc(x) + "</p>"; }).join("") + "</div>";
     case "prac": return '<div class="pr"><h6>' + esc(b.t) + '</h6><div class="tm">' + esc(b.time) + "</div><ol>" + b.steps.map(function(x){ return "<li>" + esc(x) + "</li>"; }).join("") + '</ol><div class="cd"><b>Слово-код</b>' + esc(b.code) + "</div></div>";
-    case "com": return '<div class="pr com"><h6>' + esc(b.t) + "</h6><p>" + esc(b.text) + '</p><div class="cd"><b>Слово-код</b>' + esc(b.code) + "</div></div>";
+    case "com": return '<div class="pr com"><h6>' + esc(b.t) + "</h6><p>" + esc(b.text) + '</p><div class="cd"><b>Слово-код</b>' + esc(b.code) + ' <i>Щёлкните пальцами.</i></div></div>';
   }
   return "";
 }
@@ -217,9 +226,9 @@ function exportPdf(){
           case "phr": c.push({text:b.t, italics:true, font:"Playfair", fontSize:10.5, color:col(P.main), lineHeight:1.5, margin:[10,2,0,8]}); break;
           case "lvl": c.push({text:b.items.map(function(x){ return x; }).join("\n"), fontSize:9.2, color:col(P.mute), lineHeight:1.45, margin:[0,0,0,6]}); break;
           case "prac":
-            c.push({stack:[{text:b.t, font:"Playfair", fontSize:11, color:col(P.main)}, {text:b.time.toUpperCase(), fontSize:7, bold:true, color:col(P.acc), characterSpacing:1.2, margin:[0,2,0,4]}, {ol:b.steps, fontSize:9.6, color:col(P.ink), lineHeight:1.4}, {text:"Слово-код: " + b.code, fontSize:9, italics:true, color:col(P.main), margin:[0,4,0,0]}], margin:[0,0,0,8], unbreakable:true}); break;
+            c.push({stack:[{text:b.t, font:"Playfair", fontSize:11, color:col(P.main)}, {text:b.time.toUpperCase(), fontSize:7, bold:true, color:col(P.acc), characterSpacing:1.2, margin:[0,2,0,4]}, {ol:b.steps, fontSize:9.6, color:col(P.ink), lineHeight:1.4}, {text:"Слово-код: " + b.code + " Щёлкните пальцами.", fontSize:9, italics:true, color:col(P.main), margin:[0,4,0,0]}], margin:[0,0,0,8], unbreakable:true}); break;
           case "com":
-            c.push({stack:[{text:b.t, font:"Playfair", fontSize:11, color:col(P.main)}, {text:b.text, fontSize:9.4, color:col(P.ink), lineHeight:1.4, margin:[0,3,0,0]}, {text:"Слово-код: " + b.code, fontSize:9, italics:true, color:col(P.main), margin:[0,4,0,0]}], margin:[0,0,0,8], unbreakable:true}); break;
+            c.push({stack:[{text:b.t, font:"Playfair", fontSize:11, color:col(P.main)}, {text:b.text, fontSize:9.4, color:col(P.ink), lineHeight:1.4, margin:[0,3,0,0]}, {text:"Слово-код: " + b.code + " Щёлкните пальцами.", fontSize:9, italics:true, color:col(P.main), margin:[0,4,0,0]}], margin:[0,0,0,8], unbreakable:true}); break;
         }
       });
     });
@@ -279,11 +288,11 @@ function exportWord(){
             kids.push(para(b.t, {font:"Georgia", size:23, color:P.main, bold:true, before:160, after:20}));
             kids.push(para(b.time.toUpperCase(), {size:14, color:P.acc, bold:true, sp:30, after:60}));
             b.steps.forEach(function(x, i){ kids.push(para((i + 1) + ". " + x, {size:21, after:60})); });
-            kids.push(para("Слово-код: " + b.code, {size:19, color:P.main, it:true, after:140})); break;
+            kids.push(para("Слово-код: " + b.code + " Щёлкните пальцами.", {size:19, color:P.main, it:true, after:140})); break;
           case "com":
             kids.push(para(b.t, {font:"Georgia", size:23, color:P.main, bold:true, before:160, after:20}));
             kids.push(para(b.text, {size:21, after:60}));
-            kids.push(para("Слово-код: " + b.code, {size:19, color:P.main, it:true, after:140})); break;
+            kids.push(para("Слово-код: " + b.code + " Щёлкните пальцами.", {size:19, color:P.main, it:true, after:140})); break;
         }
       });
     });
