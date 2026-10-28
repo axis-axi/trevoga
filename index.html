@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Тело знает раньше: ваша Муладхара и опора по дате рождения</title>
+<meta name="description" content="Введите дату рождения и получите расчёт Муладхары, ключа опоры и Сахасрары с личным разбором тревоги: откуда она берётся, что помогает, практики. Можно скачать PDF или Word.">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-pal="vino">
+<div class="paper"></div>
+<main class="wrap">
+  <header class="top">
+    <div class="logo">Точка опоры</div>
+    <h1>Тело знает раньше</h1>
+    <p class="lead">Тревога часто появляется в теле раньше, чем в мыслях. Введите дату рождения, и матрица покажет вашу Муладхару (физика, энергия, эмоции), ключ вашей опоры и Сахасрару, а потом разберёт, откуда берётся тревога, что помогает и какие практики подходят именно вам.</p>
+  </header>
+
+  <section class="card form" id="form">
+    <label for="name">Имя (по желанию)</label>
+    <input id="name" type="text" autocomplete="off" placeholder="Например, Анна">
+    <label for="date">Дата рождения</label>
+    <input id="date" type="text" inputmode="numeric" autocomplete="off" placeholder="ДД.ММ.ГГГГ" maxlength="10">
+    <div class="pal">
+      <span>Гамма</span>
+      <button type="button" data-p="vino" class="on">Беж и вино</button>
+      <button type="button" data-p="lilac">Сирень и золото</button>
+      <button type="button" data-p="tealpink">Бирюза и розовый</button>
+    </div>
+    <button type="button" id="go" class="btn">Показать мой разбор</button>
+    <p class="err" id="err" hidden></p>
+    <p class="note">Нужна настоящая дата рождения. Материал носит информационный характер и не заменяет консультацию врача или психолога.</p>
+  </section>
+
+  <section id="result" hidden></section>
+  <section class="card club">
+    <div class="eb">Клуб и канал</div>
+    <h2>Клуб Точка опоры</h2>
+    <p>Обучение по подписке: девять факультетов и записанные уроки, которые можно смотреть в своём темпе. Матрица, психология, нейросети, прогностика и всё, что нужно практику в работе.</p>
+    <div class="acts">
+      <a class="btn" href="https://tochka-opory.lpxl.ru/podpiska" target="_blank" rel="noopener">Перейти в клуб</a>
+      <a class="btn alt" href="https://t.me/nadin_matrix" target="_blank" rel="noopener">Телеграм-канал</a>
+    </div>
+    <div class="acts" style="margin-top:10px"><a class="btn alt" href="https://matrica.nadezhdakukhtina.ru" target="_blank" rel="noopener">Бесплатный калькулятор матрицы</a></div>
+  </section>
+  <footer class="foot">Точка опоры · Ваш путь. Ваша сила. Ваша судьба.</footer>
+</main>
+<script src="data.js"></script>
+<script src="calc.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
